@@ -1,5 +1,7 @@
 # jusText for Swift
 
+> Swift port of **[miso-belica/jusText](https://github.com/miso-belica/jusText)**
+
 A Swift port of the [jusText](https://github.com/miso-belica/jusText) boilerplate removal library. Extracts the main article content from HTML pages by classifying text blocks as **good** (content) or **bad** (boilerplate) using a combination of heuristics: link density, stopword density, block length, and context-sensitive neighbour analysis.
 
 Bundled with stopword lists for **100 languages**.
