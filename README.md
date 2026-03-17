@@ -54,7 +54,9 @@ options.lengthLow      = 70     // chars; below this → short
 options.lengthHigh     = 200    // chars; above this + high stopwords → good
 options.stopwordsLow   = 0.30   // stopword density threshold (low)
 options.stopwordsHigh  = 0.32   // stopword density threshold (high)
-options.noHeadings     = false  // set true to ignore heading context
+options.noHeadings          = false   // set true to ignore heading context
+options.boilerplateKeywords = ["sponsored", "advertisement", "sign up"]
+                                       // force-bad any block containing these phrases
 
 let paragraphs = try justext(htmlText: html, language: "English", options: options)
 ```
@@ -81,6 +83,7 @@ Each paragraph is classified independently based on:
 | Link density > threshold | `bad` |
 | Contains © symbol | `bad` |
 | Inside a `<select>` | `bad` |
+| Matches a `boilerplateKeywords` phrase | `bad` |
 | Length < `lengthLow` and has link chars | `bad` |
 | Length < `lengthLow`, no links | `short` |
 | Stopword density ≥ `stopwordsHigh` and long | `good` |
@@ -109,6 +112,8 @@ Each `Paragraph` in the returned array has:
 | `heading` | `Bool` | `true` if the block is a heading element |
 | `linksDensity()` | `Double` | Fraction of chars inside `<a>` tags |
 | `stopwordsDensity(_:)` | `Double` | Fraction of words that are stopwords |
+| `computedLinkDensity` | `Double` | Link density as computed during classification |
+| `computedStopwordDensity` | `Double` | Stopword density as computed during classification |
 | `domPath` | `String` | Dot-separated DOM path, e.g. `body.article.p` |
 
 ---
