@@ -6,6 +6,7 @@ public struct ClassifierOptions: Sendable {
     public var stopwordsHigh: Double = 0.32
     public var maxHeadingDistance: Int = 200
     public var noHeadings: Bool = false
+    public var boilerplateKeywords: Set<String> = []
     public init() {}
 }
 
@@ -28,6 +29,9 @@ public func classifyParagraphs(
             cls = .bad
         } else if p.domPath.contains("select") {
             cls = .bad
+        } else if !options.boilerplateKeywords.isEmpty &&
+                  options.boilerplateKeywords.contains(where: { text.localizedCaseInsensitiveContains($0) }) {
+            cls = .bad
         } else if length < options.lengthLow {
             cls = p.charsCountInLinks > 0 ? .bad : .short
         } else if stopwordDensity >= options.stopwordsHigh {
@@ -38,6 +42,8 @@ public func classifyParagraphs(
             cls = .bad
         }
 
+        p.computedLinkDensity = linkDensity
+        p.computedStopwordDensity = stopwordDensity
         p.cfClass = cls
         p.classType = cls
         p.heading = !options.noHeadings && p.isHeading

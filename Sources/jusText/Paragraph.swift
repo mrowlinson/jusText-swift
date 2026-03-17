@@ -11,6 +11,8 @@ public final class Paragraph: @unchecked Sendable {
     public internal(set) var cfClass: ParagraphClass = .bad
     public internal(set) var classType: ParagraphClass = .bad
     public internal(set) var heading: Bool = false
+    public internal(set) var computedStopwordDensity: Double = 0
+    public internal(set) var computedLinkDensity: Double = 0
 
     public var isBoilerplate: Bool { classType != .good }
 
