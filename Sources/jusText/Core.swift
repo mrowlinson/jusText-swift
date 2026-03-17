@@ -1,6 +1,6 @@
 import SwiftSoup
 
-func preprocessHTML(_ html: String) throws -> Element {
+public func preprocessHTML(_ html: String) throws -> Element {
     let doc = try SwiftSoup.parse(html)
     let tagsToRemove = ["script", "style", "head", "noscript",
                         "object", "embed", "applet", "iframe", "form"]
